@@ -36,16 +36,15 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $payload = (object) $request->all();
-        $newUser = User::create([
-            'username'  => $payload->username,
-            'name'      => $payload->name,
-            'positon'   => $payload->position,
-            'unit'      => $payload->unit,
-            'email'     => $payload->email,
-            'password'  => Hash::make($payload->input_password),
-            'date_joined' => "2023-10-10",
+        User::create([
+            'username'      => $payload->username,
+            'name'          => $payload->name,
+            'positon'       => $payload->position,
+            'unit'          => $payload->unit,
+            'email'         => $payload->email,
+            'password'      => Hash::make($payload->input_password),
+            'date_joined'   => $payload->date_joined,
         ]);
 
         return redirect()->route('employees.create');

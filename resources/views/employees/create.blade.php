@@ -38,9 +38,10 @@
 
                         <div class="mt-4">
                             <x-jet-label for="date_joined" value="{{ __('Tanggal Bergabung') }}" />
-                            <x-jet-input id="date_joined" class="block mt-1 w-full" type="text" name="date_joined" :value="old('date_joined')" required autofocus />
-                            <x-jet-input-error for="name" class="mt-2" />
+                            <x-jet-input id="date_joined" class="block mt-1 w-full" type="date" name="date_joined" :value="old('date_joined')" required autofocus />
+                            <x-jet-input-error for="date_joined" class="mt-2" />
                         </div>
+
 
                         <div class="mt-4">
                             <x-jet-label for="email" value="{{ __('Email') }}" />
@@ -53,8 +54,6 @@
                             <x-jet-input id="input_password" class="block mt-1 w-full" type="password" name="input_password" :value="old('input_password')" required />
                             <x-jet-input-error for="name" class="mt-2" />
                         </div>
-
-                        <!-- Add more fields as needed -->
 
                         <div class="flex items-center justify-end mt-4">
                             <x-jet-button>
