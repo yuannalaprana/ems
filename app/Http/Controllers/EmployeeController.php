@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
@@ -34,7 +36,19 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
+        $payload = (object) $request->all();
+        $newUser = User::create([
+            'username'  => $payload->username,
+            'name'      => $payload->name,
+            'positon'   => $payload->position,
+            'unit'      => $payload->unit,
+            'email'     => $payload->email,
+            'password'  => Hash::make($payload->input_password),
+            'date_joined' => "2023-10-10",
+        ]);
+
+        return redirect()->route('employees.create');
     }
 
     /**

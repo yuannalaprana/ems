@@ -42,6 +42,18 @@
                             <x-jet-input-error for="name" class="mt-2" />
                         </div>
 
+                        <div class="mt-4">
+                            <x-jet-label for="email" value="{{ __('Email') }}" />
+                            <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                            <x-jet-input-error for="email" class="mt-2" />
+                        </div>
+
+                        <div class="mt-4">
+                            <x-jet-label for="input_password" value="{{ __('Password') }}" />
+                            <x-jet-input id="input_password" class="block mt-1 w-full" type="password" name="input_password" :value="old('input_password')" required />
+                            <x-jet-input-error for="name" class="mt-2" />
+                        </div>
+
                         <!-- Add more fields as needed -->
 
                         <div class="flex items-center justify-end mt-4">
