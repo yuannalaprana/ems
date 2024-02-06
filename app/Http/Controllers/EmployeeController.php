@@ -27,7 +27,11 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('employees.create');
+        $formTitle = "Tambah Karyawan";
+
+        return view('employees.create', [
+            'formTitle' => $formTitle
+        ]);
     }
 
     /**
@@ -42,7 +46,7 @@ class EmployeeController extends Controller
         User::create([
             'username'      => $payload->username,
             'name'          => $payload->name,
-            'positon'       => $payload->position,
+            'position'       => $payload->position,
             'unit'          => $payload->unit,
             'email'         => $payload->email,
             'password'      => Hash::make($payload->input_password),
@@ -71,7 +75,13 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $employee = User::find($id);
+        $formTitle = "Ubah Karyawan";
+
+        return view('employees.create', [
+            'employee'  => $employee,
+            'formTitle' => $formTitle
+        ]);
     }
 
     /**
@@ -83,7 +93,19 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $payload = (object) $request->all();
+
+        $employee = User::find($id);
+        $employee->update([
+            'name'          => $payload->name,
+            'username'      => $payload->username,
+            'unit'          => $payload->unit,
+            'position'      => $payload->position,
+            'date_joined'   => $payload->date_joined,
+            'password'      => $payload->input_password ?? $employee->password
+        ]);
+
+        return redirect()->route('employees.index');
     }
 
     /**
@@ -94,6 +116,9 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+
+        return back();
     }
 }
