@@ -16,6 +16,7 @@
                             <tr>
                                 <th class="py-2 px-4 border-b">Nama</th>
                                 <th class="py-2 px-4 border-b">Jabatan</th>
+                                <th class="py-2 px-4 border-b">Jabatan Kedua</th>
                                 <th class="py-2 px-4 border-b">Unit</th>
                                 <th class="py-2 px-4 border-b">Tanggal Bergabung</th>
                                 <th class="py-2 px-4 border-b">Actions</th>
@@ -28,7 +29,12 @@
                                     @if($employee->position_name)
                                     <td class="py-2 px-4 border-b">{{ $employee->position_name }}</td>
                                     @else
-                                    <td class="py-2 px-4 border-b"> <i> Jabatan Telah Dihapus <i> </td>
+                                    <td class="py-2 px-4 border-b"> <i> - / Jabatan Telah Dihapus <i> </td>
+                                    @endif
+                                    @if($employee->second_position)
+                                    <td class="py-2 px-4 border-b">{{ $employee->second_position }}</td>
+                                    @else
+                                    <td class="py-2 px-4 border-b"> <i> - / Jabatan Telah Dihapus <i> </td>
                                     @endif
                                     <td class="py-2 px-4 border-b">{{ $employee->unit }}</td>
                                     <td class="py-2 px-4 border-b">{{ $employee->date_joined }}</td>

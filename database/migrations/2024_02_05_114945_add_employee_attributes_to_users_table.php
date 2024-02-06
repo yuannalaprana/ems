@@ -17,6 +17,7 @@ class AddEmployeeAttributesToUsersTable extends Migration
             $table->string('username')->unique()->nullable();
             $table->string('unit')->nullable();
             $table->string('position')->nullable();
+            $table->string('second_position')->nullable();
             $table->date('date_joined')->nullable();
         });
     }

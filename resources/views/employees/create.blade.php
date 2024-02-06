@@ -36,20 +36,39 @@
                         <div class="mt-4">
                             <x-jet-label for="position" value="{{ __('Jabatan') }}" />
                             <select id="position" name="position" class="block mt-1 w-full" required autofocus>
-                                <option value="">Pilih Jabatan</option>
+                                <option value="X">Pilih Jabatan</option>
                                 @foreach($positions as $position)
                                     <option value="{{ $position->id }}" {{ isset($employee) ? ($employee->position == $position->id ? 'selected' : '') : '' }}>
                                         {{ $position->position_name }}
                                     </option>
                                 @endforeach
-                                <option value="0">Other...</option>
+                                <option value="create">Other...</option>
                             </select>
                             <x-jet-input-error for="position" class="mt-2" />
                         </div>
 
                         <div id="otherPositionForm" class="mt-4" style="display: none;">
-                            <x-jet-label for="new_position" value="{{ __('Tambah Jabatan Baru') }}" />
+                            <x-jet-label for="new_position" value="{{ __('Tambah Jabatan Baru (Sebagai Jabatan Pertama)') }}" />
                             <x-jet-input id="new_position" class="block mt-1 w-full" type="text" name="new_position" />
+                        </div>
+
+                        <div class="mt-4">
+                            <x-jet-label for="second_position" value="{{ __('Jabatan Kedua (Opsional)') }}" />
+                            <select id="second_position" name="second_position" class="block mt-1 w-full" autofocus>
+                                <option value="">Pilih Jabatan Kedua</option>
+                                @foreach($positions as $position)
+                                    <option value="{{ $position->id }}" {{ isset($employee) ? ($employee->second_position == $position->id ? 'selected' : '') : '' }}>
+                                        {{ $position->position_name }}
+                                    </option>
+                                @endforeach
+                                <option value="create">Other...</option>
+                            </select>
+                            <x-jet-input-error for="position" class="mt-2" />
+                        </div>
+
+                        <div id="secondOtherPositionForm" class="mt-4" style="display: none;">
+                            <x-jet-label for="second_new_position" value="{{ __('Tambah Jabatan Baru (Sebagai Jabatan Kedua)') }}" />
+                            <x-jet-input id="second_new_position" class="block mt-1 w-full" type="text" name="second_new_position" />
                         </div>
 
                         <div class="mt-4">
@@ -94,10 +113,21 @@
 
             $('#position').change(function() {
                 console.log($(this).val())
-                if ($(this).val() == 0) {
+                if ($(this).val() === 'create') {
                     $('#otherPositionForm').show();
                 } else {
                     $('#otherPositionForm').hide();
+                }
+            });
+
+            $('#second_position').select2();
+
+            $('#second_position').change(function() {
+                console.log($(this).val())
+                if ($(this).val() === 'create') {
+                    $('#secondOtherPositionForm').show();
+                } else {
+                    $('#secondOtherPositionForm').hide();
                 }
             });
         });

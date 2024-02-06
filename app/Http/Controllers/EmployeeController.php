@@ -17,7 +17,8 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = User::leftJoin('positions', 'positions.id', '=', 'users.position')
-            ->select('users.*', 'positions.position_name')
+            ->leftJoin('positions as second_position', 'second_position.id', '=', 'users.second_position')
+            ->select('users.*', 'positions.position_name','second_position.position_name as second_position')
             ->get();
 
         return view('employees.index', ['employees' => $employees]);
@@ -49,7 +50,7 @@ class EmployeeController extends Controller
     {
         $payload = (object) $request->all();
 
-        if($payload->position == 0) {
+        if($payload->position == 'create') {
             $newPosition = Position::create([
                 'position_name' => $payload->new_position
             ]);
@@ -57,10 +58,20 @@ class EmployeeController extends Controller
             $payload->position = $newPosition->id;
         }
 
+        if($payload->second_position) {
+            if($payload->second_position == 0) {
+                $newPosition = Position::create([
+                    'position_name' => $payload->new_position
+                ]);
+    
+                $payload->second_position = $newPosition->id;
+            }
+        }
         User::create([
             'username'      => $payload->username,
             'name'          => $payload->name,
             'position'      => $payload->position,
+            'second_position' => $payload->second_position,
             'unit'          => $payload->unit,
             'email'         => $payload->email,
             'password'      => Hash::make($payload->input_password),
@@ -113,12 +124,22 @@ class EmployeeController extends Controller
 
         $employee = User::find($id);
 
-        if($payload->position == 0) {
+        if($payload->position == 'create') {
             $newPosition = Position::create([
                 'position_name' => $payload->new_position
             ]);
 
             $payload->position = $newPosition->id;
+        }
+
+        if($payload->second_position) {
+            if($payload->second_position == 0) {
+                $newPosition = Position::create([
+                    'position_name' => $payload->new_position
+                ]);
+    
+                $payload->second_position = $newPosition->id;
+            }
         }
         
         $employee->update([
@@ -126,6 +147,7 @@ class EmployeeController extends Controller
             'username'      => $payload->username,
             'unit'          => $payload->unit,
             'position'      => $payload->position,
+            'second_position' => $payload->second_position,
             'date_joined'   => $payload->date_joined,
             'password'      => $payload->input_password ?? $employee->password
         ]);
