@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Position;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +16,9 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = User::all();
+        $employees = User::leftJoin('positions', 'positions.id', '=', 'users.position')
+            ->select('users.*', 'positions.position_name')
+            ->get();
 
         return view('employees.index', ['employees' => $employees]);
     }
@@ -28,9 +31,11 @@ class EmployeeController extends Controller
     public function create()
     {
         $formTitle = "Tambah Karyawan";
+        $position = Position::orderBy('position_name')->get();
 
         return view('employees.create', [
-            'formTitle' => $formTitle
+            'formTitle' => $formTitle,
+            'positions' => $position,
         ]);
     }
 
@@ -43,10 +48,19 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $payload = (object) $request->all();
+
+        if($payload->position == 0) {
+            $newPosition = Position::create([
+                'position_name' => $payload->new_position
+            ]);
+
+            $payload->position = $newPosition->id;
+        }
+
         User::create([
             'username'      => $payload->username,
             'name'          => $payload->name,
-            'position'       => $payload->position,
+            'position'      => $payload->position,
             'unit'          => $payload->unit,
             'email'         => $payload->email,
             'password'      => Hash::make($payload->input_password),
@@ -77,10 +91,12 @@ class EmployeeController extends Controller
     {
         $employee = User::find($id);
         $formTitle = "Ubah Karyawan";
+        $position = Position::orderBy('position_name')->get();
 
         return view('employees.create', [
             'employee'  => $employee,
-            'formTitle' => $formTitle
+            'formTitle' => $formTitle,
+            'positions' => $position,
         ]);
     }
 
@@ -96,6 +112,15 @@ class EmployeeController extends Controller
         $payload = (object) $request->all();
 
         $employee = User::find($id);
+
+        if($payload->position == 0) {
+            $newPosition = Position::create([
+                'position_name' => $payload->new_position
+            ]);
+
+            $payload->position = $newPosition->id;
+        }
+        
         $employee->update([
             'name'          => $payload->name,
             'username'      => $payload->username,

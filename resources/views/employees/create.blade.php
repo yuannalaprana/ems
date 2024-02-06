@@ -35,8 +35,21 @@
 
                         <div class="mt-4">
                             <x-jet-label for="position" value="{{ __('Jabatan') }}" />
-                            <x-jet-input id="position" class="block mt-1 w-full" type="text" name="position" :value="isset($employee) ? $employee->position : old('position')" required autofocus />
-                            <x-jet-input-error for="name" class="mt-2" />
+                            <select id="position" name="position" class="block mt-1 w-full" required autofocus>
+                                <option value="">Pilih Jabatan</option>
+                                @foreach($positions as $position)
+                                    <option value="{{ $position->id }}" {{ isset($employee) ? ($employee->position == $position->id ? 'selected' : '') : '' }}>
+                                        {{ $position->position_name }}
+                                    </option>
+                                @endforeach
+                                <option value="0">Other...</option>
+                            </select>
+                            <x-jet-input-error for="position" class="mt-2" />
+                        </div>
+
+                        <div id="otherPositionForm" class="mt-4" style="display: none;">
+                            <x-jet-label for="new_position" value="{{ __('Tambah Jabatan Baru') }}" />
+                            <x-jet-input id="new_position" class="block mt-1 w-full" type="text" name="new_position" />
                         </div>
 
                         <div class="mt-4">
@@ -74,4 +87,19 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#position').select2();
+
+            $('#position').change(function() {
+                console.log($(this).val())
+                if ($(this).val() == 0) {
+                    $('#otherPositionForm').show();
+                } else {
+                    $('#otherPositionForm').hide();
+                }
+            });
+        });
+    </script>
 </x-app-layout>

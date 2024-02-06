@@ -14,6 +14,13 @@
         @livewireStyles
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
+        <!-- For Select2 (Searchable Options) -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
         <!-- Scripts -->
         @livewireScripts
         <script src="{{ mix('js/app.js') }}" defer></script>

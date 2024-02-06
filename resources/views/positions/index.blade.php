@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Employee List') }}
+            {{ __('Daftar Jabatan') }}
         </h2>
     </x-slot>
 
@@ -15,30 +15,19 @@
                         <thead>
                             <tr>
                                 <th class="py-2 px-4 border-b">Nama</th>
-                                <th class="py-2 px-4 border-b">Jabatan</th>
-                                <th class="py-2 px-4 border-b">Unit</th>
-                                <th class="py-2 px-4 border-b">Tanggal Bergabung</th>
-                                <th class="py-2 px-4 border-b">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($employees as $employee)
+                            @foreach($positions as $position)
                                 <tr>
-                                    <td class="py-2 px-4 border-b">{{ $employee->name }}</td>
-                                    @if($employee->position_name)
-                                    <td class="py-2 px-4 border-b">{{ $employee->position_name }}</td>
-                                    @else
-                                    <td class="py-2 px-4 border-b"> <i> Jabatan Telah Dihapus <i> </td>
-                                    @endif
-                                    <td class="py-2 px-4 border-b">{{ $employee->unit }}</td>
-                                    <td class="py-2 px-4 border-b">{{ $employee->date_joined }}</td>
+                                    <td class="py-2 px-4 border-b">{{ $position->position_name }}</td>
                                     <td class="py-2 px-4 border-b">            
                                         <x-jet-secondary-button class="ml-2">
-                                            <a href="{{ route('employees.edit', $employee->id) }}">Ubah</a>
+                                            <a href="{{ route('positions.edit', $position->id) }}">Ubah</a>
                                         </x-jet-secondary-button>
 
-                                        <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" class="inline"
-                                        onsubmit="return confirm('Yakin akan menghapus karyawan ini?');">
+                                        <form action="{{ route('positions.destroy', $position->id) }}" method="POST" class="inline"
+                                        onsubmit="return confirm('Pengahapusan jabatan dapat mempengaruhi karyawan yang menjabat ini. Yakin akan menghapus jabatan ini?');">
                                             @csrf
                                             @method('DELETE')
                                             <x-jet-danger-button type="submit">Delete</x-jet-danger-button>

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PositionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,3 +39,12 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/employees/{id}', [EmployeeController::class, 'destroy'])->name('employees.destroy');
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/positions', [PositionController::class, 'index'])->name('positions.index');
+    Route::get('/positions/create', [PositionController::class, 'create'])->name('positions.create');
+    Route::post('/positions/store', [PositionController::class, 'store'])->name('positions.store');
+    Route::get('/positions/{id}', [PositionController::class, 'show'])->name('positions.show');
+    Route::get('/positions/{id}/edit', [PositionController::class, 'edit'])->name('positions.edit');
+    Route::put('/positions/{id}', [PositionController::class, 'update'])->name('positions.update');
+    Route::delete('/positions/{id}', [PositionController::class, 'destroy'])->name('positions.destroy');
+});
