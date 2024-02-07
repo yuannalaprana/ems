@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PositionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,16 +16,41 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
+    Route::get('/oldDashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
+    Route::get('/employees/create', [EmployeeController::class, 'create'])->name('employees.create');
+    Route::post('/employees/store', [EmployeeController::class, 'store'])->name('employees.store');
+    Route::get('/employees/{id}', [EmployeeController::class, 'show'])->name('employees.show');
+    Route::get('/employees/{id}/edit', [EmployeeController::class, 'edit'])->name('employees.edit');
+    Route::put('/employees/{id}', [EmployeeController::class, 'update'])->name('employees.update');
+    Route::delete('/employees/{id}', [EmployeeController::class, 'destroy'])->name('employees.destroy');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/positions', [PositionController::class, 'index'])->name('positions.index');
+    Route::get('/positions/create', [PositionController::class, 'create'])->name('positions.create');
+    Route::post('/positions/store', [PositionController::class, 'store'])->name('positions.store');
+    Route::get('/positions/{id}', [PositionController::class, 'show'])->name('positions.show');
+    Route::get('/positions/{id}/edit', [PositionController::class, 'edit'])->name('positions.edit');
+    Route::put('/positions/{id}', [PositionController::class, 'update'])->name('positions.update');
+    Route::delete('/positions/{id}', [PositionController::class, 'destroy'])->name('positions.destroy');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        return redirect()->route('dashboard.index');
+    });
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 });

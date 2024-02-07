@@ -12,10 +12,26 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                    <x-jet-nav-link href="{{ route('dashboard.index') }}" :active="request()->routeIs('dashboard.index')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
-                </div>
+
+                    <x-jet-nav-link href="{{ route('employees.index') }}" :active="request()->routeIs('employees.index')">
+                        {{ __('Daftar Karyawan') }}
+                    </x-jet-nav-link>
+
+                    <x-jet-nav-link href="{{ route('employees.create') }}" :active="request()->routeIs('employees.create')">
+                        {{ __('Tambah Karyawan') }}
+                    </x-jet-nav-link>
+
+                    <x-jet-nav-link href="{{ route('positions.index') }}" :active="request()->routeIs('positions.index')">
+                        {{ __('Daftar Jabatan') }}
+                    </x-jet-nav-link>
+
+                    <x-jet-nav-link href="{{ route('positions.create') }}" :active="request()->routeIs('positions.create')">
+                        {{ __('Tambah Jabatan') }}
+                    </x-jet-nav-link>
+                    </div>
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
