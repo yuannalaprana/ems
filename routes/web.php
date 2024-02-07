@@ -16,9 +16,6 @@ use App\Http\Controllers\PositionController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::middleware([
     'auth:sanctum',
@@ -50,6 +47,10 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/positions/{id}', [PositionController::class, 'destroy'])->name('positions.destroy');
 });
 
-Route::middleware((['auth']))->group(function () {
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        return redirect()->route('dashboard.index');
+    });
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 });
