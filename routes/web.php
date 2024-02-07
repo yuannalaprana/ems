@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PositionController;
@@ -24,7 +25,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
+    Route::get('/oldDashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 });
@@ -47,4 +48,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/positions/{id}/edit', [PositionController::class, 'edit'])->name('positions.edit');
     Route::put('/positions/{id}', [PositionController::class, 'update'])->name('positions.update');
     Route::delete('/positions/{id}', [PositionController::class, 'destroy'])->name('positions.destroy');
+});
+
+Route::middleware((['auth']))->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 });
