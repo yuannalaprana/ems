@@ -25,6 +25,7 @@ class DashboardController extends Controller
             ->groupBy('userId', 'users.name')
             ->whereBetween('login_informations.created_at', [$startDate, $endDate])
             ->orderBy('amount', 'desc')
+            ->having('amount','>', 24)
             ->havingRaw(true)
             ->get();
 
