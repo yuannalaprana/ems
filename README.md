@@ -1,3 +1,15 @@
+SETUP PROJECT GUIDE:
+1. Clone the project (example: git clone https://github.com/yuannalaprana/ems.git)
+2. Install PHP & JS depedencies (example: composer install & npm install)
+3. Copy env example to env (example: copy .env.example .env) & configure required setups (database is a must, use empty db)
+4. Generate key
+5. Run migrations: php artisan migrate
+6. Generate key: php artisan key:generate
+7. Run user seeder: php artisan db:seed
+8. Run login information seeder: php artisan db:seed --class=LoginInformationSeeder (can be done multiple times)
+9. Serve the project: php artisan serve    
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
